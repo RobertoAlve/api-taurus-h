@@ -348,7 +348,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/conferencia/{idUsuario}/{idConferencia}")
-    public ResponseEntity<Void> updateIdConferenciaUsuario(@PathVariable int idUsuario, @PathVariable String idConferencia) {
+    public ResponseEntity<Integer> updateIdConferenciaUsuario(@PathVariable int idUsuario, @PathVariable String idConferencia) {
         usuarioBasicoRepository.alterarIdConferencia(idUsuario, idConferencia);
         return ResponseEntity.status(200).build();
     }

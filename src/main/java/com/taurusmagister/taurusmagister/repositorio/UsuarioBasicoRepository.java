@@ -50,5 +50,5 @@ public interface UsuarioBasicoRepository extends JpaRepository<UsuarioBasico, In
     @Transactional
     @Modifying
     @Query("update UsuarioBasico u set u.idConferencia = ?2 where u.idUsuario = ?1")
-    Void alterarIdConferencia(int idUsuario, String idConferencia);
+    void alterarIdConferencia(int idUsuario, String idConferencia);
 }
