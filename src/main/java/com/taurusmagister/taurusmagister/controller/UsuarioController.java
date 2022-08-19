@@ -345,4 +345,12 @@ public class UsuarioController {
         }
         UsuarioBasico userEncontrado = usuarioBasicoRepository.findById(codigo).get();
         return ResponseEntity.status(200).body(userEncontrado.getImagemCapa());
-    }}
+    }
+
+    @PostMapping("/conferencia/{idUsuario}/{idConferencia}")
+    public ResponseEntity<Void> updateIdConferenciaUsuario(@PathVariable int idUsuario, @PathVariable String idConferencia) {
+        usuarioBasicoRepository.alterarIdConferencia(idUsuario, idConferencia);
+        return ResponseEntity.status(200).build();
+    }
+
+}

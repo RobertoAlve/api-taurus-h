@@ -46,4 +46,9 @@ public interface UsuarioBasicoRepository extends JpaRepository<UsuarioBasico, In
     @Query("select new com.taurusmagister.taurusmagister.resposta.UsuarioImagem(u.imagem) from  UsuarioBasico u where " +
             " u.idUsuario = ?1")
     UsuarioImagem getImagem(int idUsuario);
+
+    @Transactional
+    @Modifying
+    @Query("update UsuarioBasico u set u.idConferencia = ?2 where u.idUsuario = ?1")
+    Void alterarIdConferencia(int idUsuario, String idConferencia);
 }
