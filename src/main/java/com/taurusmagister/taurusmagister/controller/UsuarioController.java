@@ -353,4 +353,8 @@ public class UsuarioController {
         return ResponseEntity.status(200).build();
     }
 
+    @GetMapping("/conferencia/{idUsuario}")
+    public ResponseEntity<String> getIdConferenciaUsuario(@PathVariable int idUsuario) {
+        return ResponseEntity.status(200).body(usuarioBasicoRepository.getIdConferencia(idUsuario));
+    }
 }

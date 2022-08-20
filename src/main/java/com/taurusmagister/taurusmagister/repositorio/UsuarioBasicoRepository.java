@@ -34,7 +34,7 @@ public interface UsuarioBasicoRepository extends JpaRepository<UsuarioBasico, In
     void updateSqlArea(int area, long idUsuario);
 
     @Query("select new com.taurusmagister.taurusmagister.resposta.UsuarioBasicoConsulta(u.nome, u.email, u.autenticado, " +
-            "u.cargo) from UsuarioBasico u")
+            "u.cargo, u.idConferencia) from UsuarioBasico u")
     List<UsuarioBasicoConsulta> getUsuariosBasicos();
 
     UsuarioBasico findByEmailAndSenha(String Email, String senha);
@@ -51,4 +51,7 @@ public interface UsuarioBasicoRepository extends JpaRepository<UsuarioBasico, In
     @Modifying
     @Query("update UsuarioBasico u set u.idConferencia = ?2 where u.idUsuario = ?1")
     void alterarIdConferencia(int idUsuario, String idConferencia);
+
+    @Query("select u.idConferencia from UsuarioBasico u where u.idUsuario = ?1")
+    String getIdConferencia(int idUsuario);
 }
