@@ -357,4 +357,21 @@ public class UsuarioController {
     public ResponseEntity<String> getIdConferenciaUsuario(@PathVariable int idUsuario) {
         return ResponseEntity.status(200).body(usuarioBasicoRepository.getIdConferencia(idUsuario));
     }
+
+    @GetMapping("/amigos/{idUsuario}")
+    public ResponseEntity getAmigosUsuario(@PathVariable int idUsuario) {
+        return ResponseEntity.status(200).body(usuarioBasicoRepository.getAmigosUsuario(idUsuario));
+    }
+
+    @PostMapping("/amigos/{idUsuario}/{idAmigo}")
+    public ResponseEntity postAmigoUsuario(@PathVariable int idUsuario, @PathVariable int idAmigo) {
+        UsuarioBasico usuarioBasico = usuarioBasicoRepository.getById(idUsuario);
+        UsuarioBasico amigo = usuarioBasicoRepository.getById(idAmigo);
+
+        usuarioBasico.adicionarAmigo(amigo);
+
+        usuarioBasicoRepository.save(usuarioBasico);
+
+        return ResponseEntity.status(200).build();
+    }
 }

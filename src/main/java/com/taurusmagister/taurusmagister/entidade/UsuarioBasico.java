@@ -14,6 +14,9 @@ public class UsuarioBasico extends Usuario {
     @ManyToOne
     private Area area;
 
+    @OneToMany
+    private List<UsuarioBasico> amigos = new ArrayList<>();
+
     public UsuarioBasico() {
     }
 
@@ -54,6 +57,10 @@ public class UsuarioBasico extends Usuario {
     @Override
     public String toString() {
         return String.format("%sUsuarioBasico{cargo='%s', area='%s'}", super.toString(), cargo, area);
+    }
+
+    public void adicionarAmigo(UsuarioBasico amigo) {
+        amigos.add(amigo);
     }
 
 }
