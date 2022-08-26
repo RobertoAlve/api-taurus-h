@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface MensagemRepository extends JpaRepository<Mensagem, Integer> {
 
-    @Query("select m from Mensagem m where m.fkUsuarioMentor = ?1 and m.fkUsuarioMentorado = ?2")
+    @Query("select m from Mensagem m where m.fkUsuarioMentor.idUsuario = ?1 and m.fkUsuarioMentorado.idUsuario = ?2")
     List<Mensagem> getMensagens(int idMentor, int idMentorado);
 }
