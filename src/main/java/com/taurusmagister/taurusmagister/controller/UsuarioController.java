@@ -376,7 +376,9 @@ public class UsuarioController {
         UsuarioBasico amigo = usuarioBasicoRepository.getById(idAmigo);
 
         usuarioBasico.adicionarAmigo(amigo);
+        amigo.adicionarAmigo(usuarioBasico);
         usuarioBasicoRepository.save(usuarioBasico);
+        usuarioBasicoRepository.save(amigo);
 
         return ResponseEntity.status(200).build();
     }
