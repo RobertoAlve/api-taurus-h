@@ -59,8 +59,8 @@ public interface UsuarioBasicoRepository extends JpaRepository<UsuarioBasico, In
     @Query("select u.idConferencia from UsuarioBasico u where u.idUsuario = ?1")
     String getIdConferencia(int idUsuario);
 
-    @Query("select new com.taurusmagister.taurusmagister.resposta.UsuarioBasicoInfoAmigos(u.idUsuario, u.imagem, u.nome) from UsuarioBasico u where u.idUsuario = ?1")
-    List<UsuarioBasicoInfoAmigos> getAmigosUsuario(int idUsuario);
+    @Query("select u.amigos from UsuarioBasico u where u.idUsuario = ?1")
+    List<UsuarioBasico> getAmigosUsuario(int idUsuario);
 
     UsuarioBasico findByEmail(String email);
 }

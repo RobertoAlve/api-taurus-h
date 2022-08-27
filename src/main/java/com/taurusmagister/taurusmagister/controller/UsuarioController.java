@@ -359,7 +359,15 @@ public class UsuarioController {
 
     @GetMapping("/amigos/{idUsuario}")
     public ResponseEntity<List<UsuarioBasicoInfoAmigos>> getAmigosUsuario(@PathVariable int idUsuario) {
-        return ResponseEntity.status(200).body(usuarioBasicoRepository.getAmigosUsuario(idUsuario));
+        List<UsuarioBasicoInfoAmigos> amigos = new ArrayList<>();
+
+        for (UsuarioBasico amigoS : usuarioBasicoRepository.getAmigosUsuario(idUsuario)) {
+            UsuarioBasicoInfoAmigos amigo = new UsuarioBasicoInfoAmigos(amigoS.getIdUsuario(), amigoS.getImagem(),
+                    amigoS.getNome());
+            amigos.add(amigo);
+        }
+
+        return ResponseEntity.status(200).body(amigos);
     }
 
     @PostMapping("/amigos/{idUsuario}/{idAmigo}")
@@ -368,7 +376,6 @@ public class UsuarioController {
         UsuarioBasico amigo = usuarioBasicoRepository.getById(idAmigo);
 
         usuarioBasico.adicionarAmigo(amigo);
-
         usuarioBasicoRepository.save(usuarioBasico);
 
         return ResponseEntity.status(200).build();
