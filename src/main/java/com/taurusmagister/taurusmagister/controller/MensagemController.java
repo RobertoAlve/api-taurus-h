@@ -5,6 +5,7 @@ import com.taurusmagister.taurusmagister.entidade.UsuarioBasico;
 import com.taurusmagister.taurusmagister.repositorio.MensagemRepository;
 import com.taurusmagister.taurusmagister.repositorio.UsuarioBasicoRepository;
 import com.taurusmagister.taurusmagister.requisicao.MensagemFrontEnd;
+import com.taurusmagister.taurusmagister.resposta.MensagemInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class MensagemController {
     private UsuarioBasicoRepository usuarioBasicoRepository;
 
     @GetMapping("/{idUsuario}/{idAmigo}")
-    public ResponseEntity<List<Mensagem>> getMensagens(@PathVariable int idUsuario, @PathVariable int idAmigo) {
+    public ResponseEntity<List<MensagemInfo>> getMensagens(@PathVariable int idUsuario, @PathVariable int idAmigo) {
         return ResponseEntity.status(200).body(mensagemRepository.getMensagens(idUsuario, idAmigo));
     }
 

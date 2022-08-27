@@ -4,14 +4,13 @@ import com.taurusmagister.taurusmagister.entidade.*;
 import com.taurusmagister.taurusmagister.repositorio.*;
 import com.taurusmagister.taurusmagister.resposta.UsuarioAdmConsulta;
 import com.taurusmagister.taurusmagister.resposta.UsuarioBasicoConsulta;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+import com.taurusmagister.taurusmagister.resposta.UsuarioBasicoInfoAmigos;
+import com.taurusmagister.taurusmagister.resposta.UsuarioBasicoLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,7 +40,7 @@ public class UsuarioController {
     ManipularCsv manipularCsv = new ManipularCsv();
 
     @PostMapping
-    public ResponseEntity cadastraUsuario(@RequestBody UsuarioBasico usuario) {
+    public ResponseEntity<Void> cadastraUsuario(@RequestBody UsuarioBasico usuario) {
         if (usuarioBasicoRepository.existsByEmail(usuario.getEmail())) {
             return ResponseEntity.status(409).build();
         }
@@ -51,12 +50,12 @@ public class UsuarioController {
     }
 
     @GetMapping("/{email}")
-    public ResponseEntity getUsuarioPorEmail(@PathVariable String email) {
-        return ResponseEntity.status(200).body(usuarioBasicoRepository.findByEmail(email));
+    public ResponseEntity<UsuarioBasicoLogin> getUsuarioPorEmail(@PathVariable String email) {
+        return ResponseEntity.status(200).body(usuarioBasicoRepository.getUsuarioByEmail(email));
     }
 
     @PostMapping("/autenticacao/{email}/{senha}")
-    public ResponseEntity autenticaUsuario(@PathVariable String email, @PathVariable String senha) {
+    public ResponseEntity<Void> autenticaUsuario(@PathVariable String email, @PathVariable String senha) {
         UsuarioBasico usuarioBasicoEncontrado = usuarioBasicoRepository.findByEmailAndSenha(email, senha);
         UsuarioAdm usuarioAdmEncontrado = usuarioAdmRepository.findByEmailAndSenha(email, senha);
 
@@ -82,8 +81,8 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/autenticacao/{email}")
-    public ResponseEntity logoff(@PathVariable String email) {
-        UsuarioBasico usuarioBasicoEncontrado = usuarioBasicoRepository.findByEmail(email);
+    public ResponseEntity<Void> logoff(@PathVariable String email) {
+        UsuarioBasicoLogin usuarioBasicoEncontrado = usuarioBasicoRepository.getUsuarioByEmail(email);
         UsuarioAdm usuarioAdmEncontrado = usuarioAdmRepository.findByEmail(email);
 
         if (usuarioBasicoEncontrado != null) {
@@ -111,7 +110,7 @@ public class UsuarioController {
     public ResponseEntity<Boolean> getUsuarioLogado(@PathVariable String email) {
 
         if (usuarioBasicoRepository.existsByEmail(email)) {
-            UsuarioBasico usuario = usuarioBasicoRepository.findByEmail(email);
+            UsuarioBasicoLogin usuario = usuarioBasicoRepository.getUsuarioByEmail(email);
             if (usuario.isAutenticado()) {
                 return ResponseEntity.status(200).body(true);
             } else {
@@ -359,7 +358,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/amigos/{idUsuario}")
-    public ResponseEntity getAmigosUsuario(@PathVariable int idUsuario) {
+    public ResponseEntity<List<UsuarioBasicoInfoAmigos>> getAmigosUsuario(@PathVariable int idUsuario) {
         return ResponseEntity.status(200).body(usuarioBasicoRepository.getAmigosUsuario(idUsuario));
     }
 

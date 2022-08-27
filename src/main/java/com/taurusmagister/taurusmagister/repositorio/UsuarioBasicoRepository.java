@@ -2,6 +2,8 @@ package com.taurusmagister.taurusmagister.repositorio;
 
 import com.taurusmagister.taurusmagister.entidade.UsuarioBasico;
 import com.taurusmagister.taurusmagister.resposta.UsuarioBasicoConsulta;
+import com.taurusmagister.taurusmagister.resposta.UsuarioBasicoInfoAmigos;
+import com.taurusmagister.taurusmagister.resposta.UsuarioBasicoLogin;
 import com.taurusmagister.taurusmagister.resposta.UsuarioImagem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -39,7 +41,9 @@ public interface UsuarioBasicoRepository extends JpaRepository<UsuarioBasico, In
 
     UsuarioBasico findByEmailAndSenha(String Email, String senha);
 
-    UsuarioBasico findByEmail(String email);
+    @Query("select  new com.taurusmagister.taurusmagister.resposta.UsuarioBasicoLogin(u.idUsuario,u.nome, u.email, u.imagem, " +
+            "u.imagemCapa, u.autenticado ) from UsuarioBasico u where u.email = ?1")
+    UsuarioBasicoLogin getUsuarioByEmail(String email);
 
     boolean existsByEmail(String email);
 
@@ -55,6 +59,8 @@ public interface UsuarioBasicoRepository extends JpaRepository<UsuarioBasico, In
     @Query("select u.idConferencia from UsuarioBasico u where u.idUsuario = ?1")
     String getIdConferencia(int idUsuario);
 
-    @Query("select u.amigos from UsuarioBasico u where u.idUsuario = ?1")
-    List<UsuarioBasico> getAmigosUsuario(int idUsuario);
+    @Query("select new com.taurusmagister.taurusmagister.resposta.UsuarioBasicoInfoAmigos(u.idUsuario, u.imagem, u.nome) from UsuarioBasico u where u.idUsuario = ?1")
+    List<UsuarioBasicoInfoAmigos> getAmigosUsuario(int idUsuario);
+
+    UsuarioBasico findByEmail(String email);
 }
