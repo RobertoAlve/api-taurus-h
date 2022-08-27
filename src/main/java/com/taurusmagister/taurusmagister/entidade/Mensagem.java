@@ -15,7 +15,7 @@ public class Mensagem {
     @Column(name = "idMensagem")
     private int idMensagem;
 
-    @ManyToOne()
+    @OneToOne()
     @NotNull
     private UsuarioBasico fkUsuarioMentor;
 
