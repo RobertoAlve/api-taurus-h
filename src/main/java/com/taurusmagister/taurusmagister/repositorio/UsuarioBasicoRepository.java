@@ -2,6 +2,8 @@ package com.taurusmagister.taurusmagister.repositorio;
 
 import com.taurusmagister.taurusmagister.entidade.UsuarioBasico;
 import com.taurusmagister.taurusmagister.resposta.UsuarioBasicoConsulta;
+import com.taurusmagister.taurusmagister.resposta.UsuarioBasicoInfoAmigos;
+import com.taurusmagister.taurusmagister.resposta.UsuarioBasicoLogin;
 import com.taurusmagister.taurusmagister.resposta.UsuarioImagem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -34,16 +36,31 @@ public interface UsuarioBasicoRepository extends JpaRepository<UsuarioBasico, In
     void updateSqlArea(int area, long idUsuario);
 
     @Query("select new com.taurusmagister.taurusmagister.resposta.UsuarioBasicoConsulta(u.nome, u.email, u.autenticado, " +
-            "u.cargo) from UsuarioBasico u")
+            "u.cargo, u.idConferencia) from UsuarioBasico u")
     List<UsuarioBasicoConsulta> getUsuariosBasicos();
 
     UsuarioBasico findByEmailAndSenha(String Email, String senha);
 
-    UsuarioBasico findByEmail(String email);
+    @Query("select  new com.taurusmagister.taurusmagister.resposta.UsuarioBasicoLogin(u.idUsuario,u.nome, u.email, u.imagem, " +
+            "u.imagemCapa, u.autenticado ) from UsuarioBasico u where u.email = ?1")
+    UsuarioBasicoLogin getUsuarioByEmail(String email);
 
     boolean existsByEmail(String email);
 
     @Query("select new com.taurusmagister.taurusmagister.resposta.UsuarioImagem(u.imagem) from  UsuarioBasico u where " +
             " u.idUsuario = ?1")
     UsuarioImagem getImagem(int idUsuario);
+
+    @Transactional
+    @Modifying
+    @Query("update UsuarioBasico u set u.idConferencia = ?2 where u.idUsuario = ?1")
+    void alterarIdConferencia(int idUsuario, String idConferencia);
+
+    @Query("select u.idConferencia from UsuarioBasico u where u.idUsuario = ?1")
+    String getIdConferencia(int idUsuario);
+
+    @Query("select u.amigos from UsuarioBasico u where u.idUsuario = ?1")
+    List<UsuarioBasico> getAmigosUsuario(int idUsuario);
+
+    UsuarioBasico findByEmail(String email);
 }

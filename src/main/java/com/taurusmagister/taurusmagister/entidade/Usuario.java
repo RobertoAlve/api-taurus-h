@@ -21,11 +21,13 @@ public abstract class Usuario {
     protected String senha;
     protected boolean autenticado;
     protected String habilidades;
+    protected String idConferencia;
 
     public Usuario(String email, String nome, String senha) {
         this.email = email;
         this.nome = nome;
         this.senha = senha;
+        this.idConferencia = "";
     }
 
     protected Usuario() {
@@ -103,6 +105,14 @@ public abstract class Usuario {
 
     public void setHabilidades(String habilidades) {
         this.habilidades = habilidades;
+    }
+
+    public String getIdConferencia() {
+        return idConferencia;
+    }
+
+    public void setIdConferencia(String idConferencia) {
+        this.idConferencia = idConferencia;
     }
 
     @Override

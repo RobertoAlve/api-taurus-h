@@ -1,5 +1,8 @@
 package com.taurusmagister.taurusmagister.entidade;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.taurusmagister.taurusmagister.requisicao.MensagemFrontEnd;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -12,21 +15,26 @@ public class Mensagem {
     @Column(name = "idMensagem")
     private int idMensagem;
 
-    @ManyToOne
+    @OneToOne()
     @NotNull
     private UsuarioBasico fkUsuarioMentor;
 
-    @ManyToOne
+    @ManyToOne()
     @NotNull
     private UsuarioBasico fkUsuarioMentorado;
 
-    @ManyToOne
-    @NotNull
-    private Chat fkChat;
-
     private String mensagem;
 
+    @JsonFormat(pattern="dd-MM-yyyy")
     private LocalDateTime date;
+
+    public Mensagem(MensagemFrontEnd mensagemFrontEnd) {
+        this.mensagem = mensagemFrontEnd.getMensagem();
+        this.date = mensagemFrontEnd.getDate();
+    }
+
+    public  Mensagem() {
+    }
 
     public int getIdMensagem() {
         return idMensagem;
@@ -50,14 +58,6 @@ public class Mensagem {
 
     public void setFkUsuarioMentorado(UsuarioBasico fkUsuarioMentorado) {
         this.fkUsuarioMentorado = fkUsuarioMentorado;
-    }
-
-    public Chat getFkChat() {
-        return fkChat;
-    }
-
-    public void setFkChat(Chat fkChat) {
-        this.fkChat = fkChat;
     }
 
     public String getMensagem() {

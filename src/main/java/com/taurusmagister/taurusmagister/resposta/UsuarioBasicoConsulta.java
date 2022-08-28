@@ -8,12 +8,14 @@ public class UsuarioBasicoConsulta {
     private String email;
     private boolean autenticado;
     private Cargo cargo;
+    private String idConferencia;
 
-    public UsuarioBasicoConsulta(String nome, String email, boolean autenticado, Cargo cargo) {
+    public UsuarioBasicoConsulta(String nome, String email, boolean autenticado, Cargo cargo, String idConferencia) {
         this.nome = nome;
         this.email = email;
         this.autenticado = autenticado;
         this.cargo = cargo;
+        this.idConferencia = idConferencia;
     }
 
     public String getNome() {
@@ -48,6 +50,14 @@ public class UsuarioBasicoConsulta {
         this.cargo = cargo;
     }
 
+    public String getIdConferencia() {
+        return idConferencia;
+    }
+
+    public void setIdConferencia(String idConferencia) {
+        this.idConferencia = idConferencia;
+    }
+
     @Override
     public String toString() {
         return "UsuarioBasicoConsulta{" +
@@ -55,6 +65,7 @@ public class UsuarioBasicoConsulta {
                 ", email='" + email + '\'' +
                 ", autenticado=" + autenticado +
                 ", cargo=" + cargo +
+                ", idConferencia=" + idConferencia +
                 '}';
     }
 }
