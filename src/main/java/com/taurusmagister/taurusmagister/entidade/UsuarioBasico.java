@@ -54,6 +54,14 @@ public class UsuarioBasico extends Usuario {
         return informacoes;
     }
 
+    public List<UsuarioBasico> getAmigos() {
+        return amigos;
+    }
+
+    public void setAmigos(List<UsuarioBasico> amigos) {
+        this.amigos = amigos;
+    }
+
     @Override
     public String toString() {
         return String.format("%sUsuarioBasico{cargo='%s', area='%s'}", super.toString(), cargo, area);

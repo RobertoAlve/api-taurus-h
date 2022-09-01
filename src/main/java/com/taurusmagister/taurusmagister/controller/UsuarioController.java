@@ -1,6 +1,7 @@
 package com.taurusmagister.taurusmagister.controller;
 
 import com.taurusmagister.taurusmagister.entidade.*;
+import com.taurusmagister.taurusmagister.enums.ANDAMENTO;
 import com.taurusmagister.taurusmagister.repositorio.*;
 import com.taurusmagister.taurusmagister.resposta.UsuarioAdmConsulta;
 import com.taurusmagister.taurusmagister.resposta.UsuarioBasicoConsulta;
@@ -374,6 +375,29 @@ public class UsuarioController {
     public ResponseEntity postAmigoUsuario(@PathVariable int idUsuario, @PathVariable int idAmigo) {
         UsuarioBasico usuarioBasico = usuarioBasicoRepository.getById(idUsuario);
         UsuarioBasico amigo = usuarioBasicoRepository.getById(idAmigo);
+
+        usuarioBasico.adicionarAmigo(amigo);
+        amigo.adicionarAmigo(usuarioBasico);
+        usuarioBasicoRepository.save(usuarioBasico);
+        usuarioBasicoRepository.save(amigo);
+
+        return ResponseEntity.status(200).build();
+    }
+
+    @PostMapping("/publicacao/{idPublicacao}/{idUsuario}/{idAmigo}")
+    public ResponseEntity aceitarProposta(
+            @PathVariable int idPublicacao,
+            @PathVariable int idUsuario,
+            @PathVariable int idAmigo) {
+        publicacaoRepository.updateAndamentoPublicacao(idPublicacao, ANDAMENTO.EM_ANDAMENTO);
+        UsuarioBasico usuarioBasico = usuarioBasicoRepository.getById(idUsuario);
+        UsuarioBasico amigo = usuarioBasicoRepository.getById(idAmigo);
+
+        for (UsuarioBasico u:usuarioBasico.getAmigos()) {
+            if (u.getIdUsuario() ==  idAmigo) {
+                return ResponseEntity.status(201).build();
+            }
+        }
 
         usuarioBasico.adicionarAmigo(amigo);
         amigo.adicionarAmigo(usuarioBasico);
