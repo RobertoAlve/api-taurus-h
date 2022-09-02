@@ -24,7 +24,8 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
     List<PublicacaoFront> getPublicacoes();
 
     @Query("select new com.taurusmagister.taurusmagister.resposta.PublicacaoFront(p.idPublicacao, p.fkUsuario.idUsuario, " +
-            "p.fkUsuario.nome, p.fkUsuario.imagem, p.titulo, p.plataforma, p.descricao, p.proposta) from Publicacao p where p.andamento = 'Em andamento'")
-    List<PublicacaoFront> publicacoesEmAndamento();
+            "p.fkUsuario.nome, p.fkUsuario.imagem, p.titulo, p.plataforma, p.descricao, p.proposta) from Publicacao p where p.andamento = 'Em andamento' " +
+            "and p.fkUsuario.idUsuario = ?1 or p.fkMentor.idUsuario = ?1")
+    List<PublicacaoFront> publicacoesEmAndamento(int idUsuario);
 
 }

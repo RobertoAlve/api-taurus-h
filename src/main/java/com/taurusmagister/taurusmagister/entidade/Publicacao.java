@@ -20,6 +20,9 @@ public class Publicacao {
     @ManyToOne
     private UsuarioBasico fkUsuario;
 
+    @ManyToOne
+    private UsuarioBasico fkMentor;
+
     @NotBlank
     private String andamento = ANDAMENTO.DEFAULT;
 
@@ -34,11 +37,12 @@ public class Publicacao {
         this.descricao = descricao;
         this.proposta = proposta;
         this.fkUsuario = new UsuarioBasico();
+        this.fkMentor = new UsuarioBasico();
         this.fkUsuario.idUsuario = idUsuario;
         this.plataforma = plataforma;
     }
 
-    public Publicacao(PublicacaoFrontEnd publicacao) {
+    public  Publicacao(PublicacaoFrontEnd publicacao) {
         this.titulo = publicacao.getTitulo();
         this.descricao = publicacao.getDescricao();
         this.dataPublicacao = "teste";

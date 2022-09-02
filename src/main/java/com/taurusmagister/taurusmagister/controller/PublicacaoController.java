@@ -50,9 +50,9 @@ public class PublicacaoController {
         }
     }
 
-    @GetMapping("/emandamento")
-    public ResponseEntity publicacoesEmAndamento() {
-        return ResponseEntity.status(200).body(publicacaoRepository.publicacoesEmAndamento());
+    @GetMapping("/emandamento/{idUsuario}")
+    public ResponseEntity publicacoesEmAndamento(@PathVariable int idUsuario) {
+        return ResponseEntity.status(200).body(publicacaoRepository.publicacoesEmAndamento(idUsuario));
     }
 
     @PatchMapping("/andamento/{idPublicacao}")
