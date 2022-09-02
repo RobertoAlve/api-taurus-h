@@ -51,7 +51,7 @@ public class PublicacaoController {
     }
 
     @GetMapping("/emandamento/{idUsuario}")
-    public ResponseEntity publicacoesEmAndamento(@PathVariable int idUsuario) {
+    public ResponseEntity<List<PublicacaoFront>> publicacoesEmAndamento(@PathVariable int idUsuario) {
         return ResponseEntity.status(200).body(publicacaoRepository.publicacoesEmAndamento(idUsuario));
     }
 
