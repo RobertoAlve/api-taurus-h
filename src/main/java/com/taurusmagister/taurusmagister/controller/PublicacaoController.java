@@ -50,6 +50,11 @@ public class PublicacaoController {
         }
     }
 
+    @GetMapping("/emandamento/{idUsuario}")
+    public ResponseEntity<List<PublicacaoFront>> publicacoesEmAndamento(@PathVariable int idUsuario) {
+        return ResponseEntity.status(200).body(publicacaoRepository.publicacoesEmAndamento(idUsuario));
+    }
+
     @PatchMapping("/andamento/{idPublicacao}")
     public ResponseEntity updateStatusPublicacao(
             @PathVariable int idPublicacao

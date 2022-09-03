@@ -1,0 +1,21 @@
+version: "1"
+services:
+  employee-jdbc:
+    image: employee-jdbc
+    ports:
+      - "8080:8080"
+    networks:
+      - connection-spring-mySql
+    depends_on:
+      - mysqldb
+ 
+  mysqldb:
+    image: mysql:8
+    networks:
+      - connection-spring-mySql
+    environment:
+      - MYSQL_ROOT_PASSWORD=taurus
+      - MYSQL_DATABASE=db_taurus
+
+networks:
+  connection-spring-mySql:
