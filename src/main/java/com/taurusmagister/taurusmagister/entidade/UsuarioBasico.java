@@ -14,7 +14,7 @@ public class UsuarioBasico extends Usuario {
     @ManyToOne
     private Area area;
 
-    @OneToMany
+    @ManyToMany
     private List<UsuarioBasico> amigos = new ArrayList<>();
 
     public UsuarioBasico() {
