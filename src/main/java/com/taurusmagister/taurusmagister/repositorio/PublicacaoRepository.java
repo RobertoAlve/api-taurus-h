@@ -29,4 +29,9 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
             "and p.fkUsuario.idUsuario = ?1 or p.fkMentor.idUsuario = ?1")
     List<PublicacaoFront> publicacoesEmAndamento(int idUsuario);
 
+    @Transactional
+    @Modifying
+    @Query("update Publicacao p set p.fkMentor.idUsuario = ?1 where p.idPublicacao = ?2")
+    void setFkMentorPublicacao(int idMentor, int idPublicacao);
+
 }

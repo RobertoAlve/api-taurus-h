@@ -114,6 +114,22 @@ public class Publicacao {
         this.plataforma = plataforma;
     }
 
+    public String getDataPublicacao() {
+        return dataPublicacao;
+    }
+
+    public void setDataPublicacao(String dataPublicacao) {
+        this.dataPublicacao = dataPublicacao;
+    }
+
+    public UsuarioBasico getFkMentor() {
+        return fkMentor;
+    }
+
+    public void setFkMentor(UsuarioBasico fkMentor) {
+        this.fkMentor = fkMentor;
+    }
+
     @Override
     public String toString() {
         return "Publicacao{" +

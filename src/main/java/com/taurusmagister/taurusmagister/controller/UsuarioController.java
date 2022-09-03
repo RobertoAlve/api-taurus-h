@@ -390,9 +390,11 @@ public class UsuarioController {
             @PathVariable int idUsuario,
             @PathVariable int idAmigo) {
         publicacaoRepository.updateAndamentoPublicacao(idPublicacao, ANDAMENTO.EM_ANDAMENTO);
+        Publicacao publicacao = publicacaoRepository.getById(idPublicacao);
         UsuarioBasico usuarioBasico = usuarioBasicoRepository.getById(idUsuario);
         UsuarioBasico amigo = usuarioBasicoRepository.getById(idAmigo);
 
+        publicacaoRepository.setFkMentorPublicacao(idAmigo, idPublicacao);
         for (UsuarioBasico u:usuarioBasico.getAmigos()) {
             if (u.getIdUsuario() ==  idAmigo) {
                 return ResponseEntity.status(201).build();
