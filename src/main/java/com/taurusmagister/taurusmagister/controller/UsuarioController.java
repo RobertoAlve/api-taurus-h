@@ -394,7 +394,7 @@ public class UsuarioController {
         UsuarioBasico usuarioBasico = usuarioBasicoRepository.getById(idUsuario);
         UsuarioBasico amigo = usuarioBasicoRepository.getById(idAmigo);
 
-        publicacaoRepository.setFkMentorPublicacao(idAmigo, idPublicacao);
+        publicacaoRepository.setFkMentorPublicacao(idUsuario, idPublicacao);
         for (UsuarioBasico u:usuarioBasico.getAmigos()) {
             if (u.getIdUsuario() ==  idAmigo) {
                 return ResponseEntity.status(201).build();
