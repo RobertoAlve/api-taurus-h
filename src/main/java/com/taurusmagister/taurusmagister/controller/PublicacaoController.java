@@ -8,6 +8,7 @@ import com.taurusmagister.taurusmagister.repositorio.PublicacaoRepository;
 import com.taurusmagister.taurusmagister.repositorio.TransacaoRepository;
 import com.taurusmagister.taurusmagister.requisicao.PublicacaoFrontEnd;
 import com.taurusmagister.taurusmagister.resposta.PublicacaoFront;
+import com.taurusmagister.taurusmagister.resposta.PublicacaoFrontEmAndamento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,7 +52,7 @@ public class PublicacaoController {
     }
 
     @GetMapping("/emandamento/{idUsuario}")
-    public ResponseEntity<List<PublicacaoFront>> publicacoesEmAndamento(@PathVariable int idUsuario) {
+    public ResponseEntity<List<PublicacaoFrontEmAndamento>> publicacoesEmAndamento(@PathVariable int idUsuario) {
         return ResponseEntity.status(200).body(publicacaoRepository.publicacoesEmAndamento(idUsuario));
     }
 

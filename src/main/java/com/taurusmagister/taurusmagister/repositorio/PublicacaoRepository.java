@@ -2,6 +2,7 @@ package com.taurusmagister.taurusmagister.repositorio;
 
 import com.taurusmagister.taurusmagister.entidade.Publicacao;
 import com.taurusmagister.taurusmagister.resposta.PublicacaoFront;
+import com.taurusmagister.taurusmagister.resposta.PublicacaoFrontEmAndamento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,14 +21,14 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
     int contagem();
 
     @Query("select new com.taurusmagister.taurusmagister.resposta.PublicacaoFront(p.idPublicacao, p.fkUsuario.idUsuario, " +
-            "p.fkUsuario.nome, p.fkUsuario.imagem, p.titulo, p.plataforma, p.descricao, p.proposta, p.andamento) from Publicacao p " +
-            "where p.andamento = 'Finalizada' or p.andamento = 'Não iniciada'")
+            "p.fkUsuario.nome, p.fkUsuario.imagem, p.titulo, p.plataforma, p.descricao, p.proposta, p.andamento) " +
+            "from Publicacao p where p.andamento = 'Finalizada' or p.andamento = 'Não iniciada'")
     List<PublicacaoFront> getPublicacoes();
 
-    @Query("select new com.taurusmagister.taurusmagister.resposta.PublicacaoFront(p.idPublicacao, p.fkUsuario.idUsuario, " +
-            "p.fkUsuario.nome, p.fkUsuario.imagem, p.titulo, p.plataforma, p.descricao, p.proposta, p.andamento) from Publicacao p where p.andamento = 'Em andamento' " +
-            "and p.fkUsuario.idUsuario = ?1 or p.fkMentor.idUsuario = ?1")
-    List<PublicacaoFront> publicacoesEmAndamento(int idUsuario);
+    @Query("select new com.taurusmagister.taurusmagister.resposta.PublicacaoFrontEmAndamento(p.idPublicacao, p.fkUsuario.idUsuario, " +
+            "p.fkUsuario.nome, p.fkUsuario.imagem, p.titulo, p.plataforma, p.descricao, p.proposta, p.andamento, p.fkMentor.nome) " +
+            "from Publicacao p where p.andamento = 'Em andamento' and p.fkUsuario.idUsuario = ?1 or p.fkMentor.idUsuario = ?1")
+    List<PublicacaoFrontEmAndamento> publicacoesEmAndamento(int idUsuario);
 
     @Transactional
     @Modifying
