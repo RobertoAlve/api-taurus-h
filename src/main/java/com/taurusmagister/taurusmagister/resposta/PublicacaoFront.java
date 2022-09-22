@@ -10,9 +10,10 @@ public class PublicacaoFront {
     private String plataforma;
     private String descricao;
     private String proposta;
+    private String andamento;
 
     public PublicacaoFront(int idPublicacao, int idUsuario, String nome, byte[] imagem, String titulo,
-                           String plataforma, String descricao, String proposta) {
+                           String plataforma, String descricao, String proposta, String andamento) {
         this.idPublicacao = idPublicacao;
         this.idUsuario = idUsuario;
         this.nome = nome;
@@ -21,6 +22,7 @@ public class PublicacaoFront {
         this.plataforma = plataforma;
         this.descricao = descricao;
         this.proposta = proposta;
+        this.andamento = andamento;
     }
 
     public int getIdPublicacao() {
@@ -85,5 +87,13 @@ public class PublicacaoFront {
 
     public void setProposta(String proposta) {
         this.proposta = proposta;
+    }
+
+    public String getAndamento() {
+        return andamento;
+    }
+
+    public void setAndamento(String andamento) {
+        this.andamento = andamento;
     }
 }

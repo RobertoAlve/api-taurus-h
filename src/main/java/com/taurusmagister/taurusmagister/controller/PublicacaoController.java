@@ -3,6 +3,7 @@ package com.taurusmagister.taurusmagister.controller;
 import com.taurusmagister.taurusmagister.entidade.NotificationListener;
 import com.taurusmagister.taurusmagister.entidade.Pilha;
 import com.taurusmagister.taurusmagister.entidade.Publicacao;
+import com.taurusmagister.taurusmagister.enums.ANDAMENTO;
 import com.taurusmagister.taurusmagister.repositorio.PublicacaoRepository;
 import com.taurusmagister.taurusmagister.repositorio.TransacaoRepository;
 import com.taurusmagister.taurusmagister.requisicao.PublicacaoFrontEnd;
@@ -28,7 +29,6 @@ public class PublicacaoController {
 
     @PostMapping
     public ResponseEntity adicionaPublicacao(@RequestBody PublicacaoFrontEnd publicacaoF) {
-
         Publicacao publicacao = new Publicacao(publicacaoF);
         publicacao.setFkUsuario(publicacaoF.getIdUsuario());
         publicacaoRepository.save(publicacao);
