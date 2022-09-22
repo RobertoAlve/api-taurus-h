@@ -69,4 +69,10 @@ public class PublicacaoController {
         return ResponseEntity.status(404).build();
     }
 
+    @PatchMapping("/finalizar/{idPublicacao}")
+    public ResponseEntity finalizarPublicacao(@PathVariable int idPublicacao) {
+        publicacaoRepository.finalizarPublicacao(idPublicacao);
+        return ResponseEntity.status(200).build();
+    }
+
 }

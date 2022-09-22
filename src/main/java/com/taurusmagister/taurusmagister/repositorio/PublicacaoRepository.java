@@ -32,6 +32,11 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
 
     @Transactional
     @Modifying
+    @Query("update Publicacao p set p.andamento = 'Finalizada' where p.idPublicacao = ?1")
+    void finalizarPublicacao(int idPublicacao);
+
+    @Transactional
+    @Modifying
     @Query("update Publicacao p set p.fkMentor.idUsuario = ?1 where p.idPublicacao = ?2")
     void setFkMentorPublicacao(int idMentor, int idPublicacao);
 
