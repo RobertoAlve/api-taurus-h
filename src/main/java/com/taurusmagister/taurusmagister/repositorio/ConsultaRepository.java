@@ -19,8 +19,8 @@ public interface ConsultaRepository extends JpaRepository<UsuarioBasico, Integer
             "t.fkMentor.idUsuario = ?1 group by t.idTransacao order by qtd desc")
     List<Object> getUsuarioAjudados(int id);
 
-    @Query("select new com.taurusmagister.taurusmagister.resposta.PublicacaoFinalizadaFront(t.idTransacao, t.publicacao.titulo," +
-            "t.publicacao.plataforma,  t.publicacao.descricao, t.fkMentor.nome) from Transacao t where " +
-            "t.fkMentorado.idUsuario = ?1 or t.fkMentor.idUsuario = ?1 and t.publicacao.andamento = 'Finalizada'")
+    @Query("select new com.taurusmagister.taurusmagister.resposta.PublicacaoFinalizadaFront(p.idPublicacao, p.titulo," +
+            "p.plataforma,  p.descricao, p.fkMentor.nome) from Publicacao p where " +
+            "p.fkUsuario.idUsuario = ?1 or p.fkMentor.idUsuario = ?1 and p.andamento = 'Finalizada'")
     List<Object> getPublicacoesFinalizadas(int id);
 }
