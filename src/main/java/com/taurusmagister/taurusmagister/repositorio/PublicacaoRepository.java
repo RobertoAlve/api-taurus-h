@@ -22,7 +22,7 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
 
     @Query("select new com.taurusmagister.taurusmagister.resposta.PublicacaoFront(p.idPublicacao, p.fkUsuario.idUsuario, " +
             "p.fkUsuario.nome, p.fkUsuario.imagem, p.titulo, p.plataforma, p.descricao, p.proposta, p.andamento) " +
-            "from Publicacao p where p.andamento = 'Finalizada' or p.andamento = 'Não iniciada'")
+            "from Publicacao p where p.andamento = 'Não iniciada'")
     List<PublicacaoFront> getPublicacoes();
 
     @Query("select new com.taurusmagister.taurusmagister.resposta.PublicacaoFrontEmAndamento(p.idPublicacao, p.fkUsuario.idUsuario, " +
