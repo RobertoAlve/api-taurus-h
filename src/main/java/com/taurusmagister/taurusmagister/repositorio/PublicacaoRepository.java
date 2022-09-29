@@ -1,8 +1,10 @@
 package com.taurusmagister.taurusmagister.repositorio;
 
 import com.taurusmagister.taurusmagister.entidade.Publicacao;
+import com.taurusmagister.taurusmagister.resposta.ConsultaUsuariosAjudados;
 import com.taurusmagister.taurusmagister.resposta.PublicacaoFront;
 import com.taurusmagister.taurusmagister.resposta.PublicacaoFrontEmAndamento;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -39,5 +41,9 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
     @Modifying
     @Query("update Publicacao p set p.fkMentor.idUsuario = ?1 where p.idPublicacao = ?2")
     void setFkMentorPublicacao(int idMentor, int idPublicacao);
+
+    @Query("select distinct new com.taurusmagister.taurusmagister.resposta.ConsultaUsuariosAjudados(p.fkUsuario.nome, p.fkUsuario.imagem," +
+            "p.fkUsuario.habilidades) from Publicacao p where p.fkMentor.idUsuario = ?1")
+    List<ConsultaUsuariosAjudados> getUsuariosAjudados(int idUsuario, PageRequest pageable);
 
 }

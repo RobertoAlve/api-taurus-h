@@ -7,9 +7,11 @@ import com.taurusmagister.taurusmagister.enums.ANDAMENTO;
 import com.taurusmagister.taurusmagister.repositorio.PublicacaoRepository;
 import com.taurusmagister.taurusmagister.repositorio.TransacaoRepository;
 import com.taurusmagister.taurusmagister.requisicao.PublicacaoFrontEnd;
+import com.taurusmagister.taurusmagister.resposta.ConsultaUsuariosAjudados;
 import com.taurusmagister.taurusmagister.resposta.PublicacaoFront;
 import com.taurusmagister.taurusmagister.resposta.PublicacaoFrontEmAndamento;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -75,4 +77,8 @@ public class PublicacaoController {
         return ResponseEntity.status(200).build();
     }
 
+    @GetMapping("/usuariosAjudados/{idUsuario}")
+    public ResponseEntity<List<ConsultaUsuariosAjudados>> getUsuariosAjudados(@PathVariable int idUsuario) {
+        return ResponseEntity.status(200).body(publicacaoRepository.getUsuariosAjudados(idUsuario, PageRequest.of(0, 3)));
+    }
 }
