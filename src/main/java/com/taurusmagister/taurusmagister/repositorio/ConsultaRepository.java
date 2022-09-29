@@ -2,6 +2,7 @@ package com.taurusmagister.taurusmagister.repositorio;
 
 import com.taurusmagister.taurusmagister.entidade.UsuarioBasico;
 import com.taurusmagister.taurusmagister.resposta.ConsultaMaioresPublicadores;
+import com.taurusmagister.taurusmagister.resposta.PublicacaoFront;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,4 +24,9 @@ public interface ConsultaRepository extends JpaRepository<UsuarioBasico, Integer
             "p.plataforma,  p.descricao, p.fkMentor.nome) from Publicacao p where " +
             "p.fkUsuario.idUsuario = ?1 or p.fkMentor.idUsuario = ?1 and p.andamento = 'Finalizada'")
     List<Object> getPublicacoesFinalizadas(int id);
+
+    @Query("select new com.taurusmagister.taurusmagister.resposta.PublicacaoFront(p.idPublicacao, p.fkUsuario.idUsuario, " +
+            "p.fkUsuario.nome, p.fkUsuario.imagem, p.titulo, p.plataforma, p.descricao, p.proposta, p.andamento) from Publicacao p where " +
+            "p.plataforma like CONCAT(?1, '%')")
+    List<PublicacaoFront> getPublicacoesFiltroPlataforma(String nomePlataforma);
 }
