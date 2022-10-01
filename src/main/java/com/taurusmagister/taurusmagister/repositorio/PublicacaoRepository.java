@@ -43,7 +43,7 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
     void setFkMentorPublicacao(int idMentor, int idPublicacao);
 
     @Query("select distinct new com.taurusmagister.taurusmagister.resposta.ConsultaUsuariosAjudados(p.fkUsuario.nome, p.fkUsuario.imagem," +
-            "p.fkUsuario.habilidades) from Publicacao p where p.fkMentor.idUsuario = ?1")
+            "p.fkUsuario.habilidades, p.fkUsuario.autenticado) from Publicacao p where p.fkMentor.idUsuario = ?1")
     List<ConsultaUsuariosAjudados> getUsuariosAjudados(int idUsuario, PageRequest pageable);
 
 }

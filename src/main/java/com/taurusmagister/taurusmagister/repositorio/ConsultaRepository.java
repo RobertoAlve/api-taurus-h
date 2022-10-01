@@ -12,12 +12,12 @@ import java.util.List;
 public interface ConsultaRepository extends JpaRepository<UsuarioBasico, Integer> {
 
     @Query("select new com.taurusmagister.taurusmagister.resposta.ConsultaMaioresPublicadores(count(p.fkUsuario.idUsuario)" +
-            ", max(u.idUsuario), u.nome, max(u.imagem), max(u.habilidades)) from Publicacao p inner join UsuarioBasico " +
-            "u on u.idUsuario = p.fkUsuario.idUsuario group by u.nome order by count(p.fkUsuario.idUsuario) desc")
+            ", max(u.idUsuario), u.nome, max(u.imagem), max(u.habilidades), u.autenticado) from Publicacao p inner join UsuarioBasico " +
+            "u on u.idUsuario = p.fkUsuario.idUsuario group by u.nome, u.autenticado order by count(p.fkUsuario.idUsuario) desc")
     List<ConsultaMaioresPublicadores> getMaisPublicacoes(PageRequest pageable);
 
-    @Query("select count(t.idTransacao) as qtd, t.fkMentorado.nome, t.fkMentorado.imagem, t.fkMentorado.habilidades from Transacao t where " +
-            "t.fkMentor.idUsuario = ?1 group by t.idTransacao order by qtd desc")
+    @Query("select count(t.idTransacao) as qtd, t.fkMentorado.nome, t.fkMentorado.imagem, t.fkMentorado.habilidades, t.fkMentorado.autenticado from Transacao t where " +
+            "t.fkMentor.idUsuario = ?1 group by t.idTransacao, t.fkMentorado.autenticado order by qtd desc")
     List<Object> getUsuarioAjudados(int id);
 
     @Query("select new com.taurusmagister.taurusmagister.resposta.PublicacaoFinalizadaFront(p.idPublicacao, p.titulo," +
@@ -27,6 +27,6 @@ public interface ConsultaRepository extends JpaRepository<UsuarioBasico, Integer
 
     @Query("select new com.taurusmagister.taurusmagister.resposta.PublicacaoFront(p.idPublicacao, p.fkUsuario.idUsuario, " +
             "p.fkUsuario.nome, p.fkUsuario.imagem, p.titulo, p.plataforma, p.descricao, p.proposta, p.andamento) from Publicacao p where " +
-            "p.plataforma like CONCAT(?1, '%')")
+            "p.plataforma like CONCAT(?1, '%') or p.titulo like CONCAT(?1, '%') and p.andamento = 'Não iniciada'")
     List<PublicacaoFront> getPublicacoesFiltroPlataforma(String nomePlataforma);
 }

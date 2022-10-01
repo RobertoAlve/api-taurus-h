@@ -9,13 +9,15 @@ public class ConsultaMaioresPublicadores {
     private String nome;
     private byte[] imagem;
     private String habilidades;
+    private boolean autenticado;
 
-    public ConsultaMaioresPublicadores(long qtdPublicacoes, int idUsuario, String nome, byte[] imagem, String habilidades) {
+    public ConsultaMaioresPublicadores(long qtdPublicacoes, int idUsuario, String nome, byte[] imagem, String habilidades, boolean autenticado) {
         this.qtdPublicacoes = qtdPublicacoes;
         this.idUsuario = idUsuario;
         this.nome = nome;
         this.imagem = imagem;
         this.habilidades = habilidades;
+        this.autenticado = autenticado;
     }
 
     public long getQtdPublicacoes() {
@@ -56,6 +58,14 @@ public class ConsultaMaioresPublicadores {
 
     public void setHabilidades(String habilidades) {
         this.habilidades = habilidades;
+    }
+
+    public boolean isAutenticado() {
+        return autenticado;
+    }
+
+    public void setAutenticado(boolean autenticado) {
+        this.autenticado = autenticado;
     }
 
     @Override

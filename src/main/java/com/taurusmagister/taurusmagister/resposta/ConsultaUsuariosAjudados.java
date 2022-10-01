@@ -5,11 +5,13 @@ public class ConsultaUsuariosAjudados {
     private String nome;
     private byte[] imagem;
     private String habilidades;
+    private boolean autenticado;
 
-    public ConsultaUsuariosAjudados(String nome, byte[] imagem, String habilidades) {
+    public ConsultaUsuariosAjudados(String nome, byte[] imagem, String habilidades, boolean autenticado) {
         this.nome = nome;
         this.imagem = imagem;
         this.habilidades = habilidades;
+        this.autenticado = autenticado;
     }
 
     public String getNome() {
@@ -34,5 +36,13 @@ public class ConsultaUsuariosAjudados {
 
     public void setHabilidades(String habilidades) {
         this.habilidades = habilidades;
+    }
+
+    public boolean isAutenticado() {
+        return autenticado;
+    }
+
+    public void setAutenticado(boolean autenticado) {
+        this.autenticado = autenticado;
     }
 }
