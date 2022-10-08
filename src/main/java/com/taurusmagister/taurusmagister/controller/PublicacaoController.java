@@ -3,6 +3,7 @@ package com.taurusmagister.taurusmagister.controller;
 import com.taurusmagister.taurusmagister.entidade.NotificationListener;
 import com.taurusmagister.taurusmagister.entidade.Pilha;
 import com.taurusmagister.taurusmagister.entidade.Publicacao;
+import com.taurusmagister.taurusmagister.entidade.UsuarioBasico;
 import com.taurusmagister.taurusmagister.enums.ANDAMENTO;
 import com.taurusmagister.taurusmagister.repositorio.PublicacaoRepository;
 import com.taurusmagister.taurusmagister.repositorio.TransacaoRepository;
@@ -12,10 +13,13 @@ import com.taurusmagister.taurusmagister.resposta.PublicacaoFront;
 import com.taurusmagister.taurusmagister.resposta.PublicacaoFrontEmAndamento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -81,4 +85,28 @@ public class PublicacaoController {
     public ResponseEntity<List<ConsultaUsuariosAjudados>> getUsuariosAjudados(@PathVariable int idUsuario) {
         return ResponseEntity.status(200).body(publicacaoRepository.getUsuariosAjudados(idUsuario, PageRequest.of(0, 3)));
     }
+
+    @PatchMapping(value = "/upload/resolucao/{idPublicacao}", consumes = {MediaType.APPLICATION_PDF_VALUE, "application/pdf", "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"})
+    public ResponseEntity<Void> pathResolucao(@PathVariable int idPublicacao, @RequestBody MultipartFile resolucao) throws IOException {
+        if (!publicacaoRepository.existsById(idPublicacao)) {
+            return ResponseEntity.status(404).build();
+        }
+        Publicacao publicacao = publicacaoRepository.findById(idPublicacao).get();
+        publicacao.setResolucao(resolucao.getBytes());
+        publicacaoRepository.save(publicacao);
+
+        return ResponseEntity.status(200).build();
+    }
+
+    @GetMapping(value = "/download/resolucao/{idPublicacao}", produces = {MediaType.APPLICATION_PDF_VALUE, "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"})
+    public ResponseEntity<byte[]> getResolucao(@PathVariable int idPublicacao) {
+        if (!publicacaoRepository.existsById(idPublicacao)) {
+            return ResponseEntity.status(404).build();
+        }
+        Publicacao publicacao = publicacaoRepository.findById(idPublicacao).get();
+        return ResponseEntity.status(200).body(publicacao.getResolucao());
+    }
+
 }

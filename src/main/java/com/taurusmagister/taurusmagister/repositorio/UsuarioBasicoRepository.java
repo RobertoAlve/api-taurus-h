@@ -42,7 +42,7 @@ public interface UsuarioBasicoRepository extends JpaRepository<UsuarioBasico, In
     UsuarioBasico findByEmailAndSenha(String Email, String senha);
 
     @Query("select  new com.taurusmagister.taurusmagister.resposta.UsuarioBasicoLogin(u.idUsuario,u.nome, u.email, u.imagem, " +
-            "u.imagemCapa, u.autenticado, u.area.nomeArea, u.cargo.nomeCargo, u.habilidades) from UsuarioBasico u where u.email = ?1")
+            "u.imagemCapa, u.autenticado, u.area.nomeArea, u.cargo.nomeCargo) from UsuarioBasico u where u.email = ?1")
     UsuarioBasicoLogin getUsuarioByEmail(String email);
 
     boolean existsByEmail(String email);

@@ -256,7 +256,7 @@ public class ManipularCsv {
 
                         System.out.println(emailUsuario + "///////////////////////////////////");
                         UsuarioBasico usuarioBasico = usuarioBasicoRepository.findByEmail(emailUsuario);
-                        Publicacao publicacao = new Publicacao(titulo, descricao, proposta, usuarioBasico.getIdUsuario(), plataforma);
+                        Publicacao publicacao = new Publicacao(titulo, descricao, proposta, usuarioBasico.getIdUsuario(), plataforma, null);
 
                         publicacaoRepository.save(publicacao);
 

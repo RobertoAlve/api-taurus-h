@@ -13,9 +13,9 @@ public class UsuarioBasicoLogin {
     private boolean autenticado;
     private String area;
     private String cargo;
-    private String habilidades;
 
-    public UsuarioBasicoLogin(int idUsuario, String nome, String email, byte[] imagem, byte[] imagemCapa, boolean autenticado, String area, String cargo, String habilidades) {
+    public UsuarioBasicoLogin(int idUsuario, String nome, String email, byte[] imagem, byte[] imagemCapa, boolean autenticado,
+                              String area, String cargo) {
         this.idUsuario = idUsuario;
         this.nome = nome;
         this.email = email;
@@ -24,7 +24,6 @@ public class UsuarioBasicoLogin {
         this.autenticado = autenticado;
         this.area = area;
         this.cargo = cargo;
-        this.habilidades = habilidades;
     }
 
     public int getIdUsuario() {
@@ -89,14 +88,6 @@ public class UsuarioBasicoLogin {
 
     public void setCargo(String cargo) {
         this.cargo = cargo;
-    }
-
-    public String getHabilidades() {
-        return habilidades;
-    }
-
-    public void setHabilidades(String habilidades) {
-        this.habilidades = habilidades;
     }
 
     public List<String> exibeInformacoes(List<Object> usuarios) {

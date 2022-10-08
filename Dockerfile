@@ -1,3 +1,3 @@
-From openjdk:8
-copy ./target/api-taurus-h.jar api-taurus-h.jar
-CMD ["java","-jar","api-taurus-h.jar"]
+FROM openjdk:11
+COPY ./target/taurus-magister-0.0.1-SNAPSHOT.jar taurus-magister-0.0.1-SNAPSHOT.jar
+CMD ["java","-jar","taurus-magister-0.0.1-SNAPSHOT.jar"]

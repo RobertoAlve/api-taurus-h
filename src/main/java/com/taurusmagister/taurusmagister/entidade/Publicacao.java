@@ -5,6 +5,7 @@ import com.taurusmagister.taurusmagister.requisicao.PublicacaoFrontEnd;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
 @Entity
 public class Publicacao {
@@ -14,8 +15,9 @@ public class Publicacao {
     private int idPublicacao;
     private String titulo;
     private String descricao;
-    private String dataPublicacao;
+    private Date dataPublicacao;
     private String proposta;
+    private byte[] resolucao;
 
     @ManyToOne
     private UsuarioBasico fkUsuario;
@@ -32,7 +34,7 @@ public class Publicacao {
     public Publicacao() {
     }
 
-    public Publicacao(String titulo, String descricao, String proposta, int idUsuario, String plataforma) {
+    public Publicacao(String titulo, String descricao, String proposta, int idUsuario, String plataforma, byte[] resolucao) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.proposta = proposta;
@@ -40,12 +42,13 @@ public class Publicacao {
         this.fkMentor = new UsuarioBasico();
         this.fkUsuario.idUsuario = idUsuario;
         this.plataforma = plataforma;
+        this.resolucao = resolucao;
     }
 
     public  Publicacao(PublicacaoFrontEnd publicacao) {
         this.titulo = publicacao.getTitulo();
         this.descricao = publicacao.getDescricao();
-        this.dataPublicacao = "teste";
+        this.dataPublicacao = new Date();
         this.proposta = publicacao.getProposta();
         this.plataforma = publicacao.getPlataforma();
     }
@@ -74,11 +77,11 @@ public class Publicacao {
         this.descricao = descricao;
     }
 
-    public String getData() {
+    public Date getData() {
         return dataPublicacao;
     }
 
-    public void setData(String data) {
+    public void setData(Date data) {
         this.dataPublicacao = data;
     }
 
@@ -114,11 +117,11 @@ public class Publicacao {
         this.plataforma = plataforma;
     }
 
-    public String getDataPublicacao() {
+    public Date getDataPublicacao() {
         return dataPublicacao;
     }
 
-    public void setDataPublicacao(String dataPublicacao) {
+    public void setDataPublicacao(Date dataPublicacao) {
         this.dataPublicacao = dataPublicacao;
     }
 
@@ -128,6 +131,14 @@ public class Publicacao {
 
     public void setFkMentor(UsuarioBasico fkMentor) {
         this.fkMentor = fkMentor;
+    }
+
+    public byte[] getResolucao() {
+        return resolucao;
+    }
+
+    public void setResolucao(byte[] resolucao) {
+        this.resolucao = resolucao;
     }
 
     @Override
